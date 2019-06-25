@@ -96,3 +96,6 @@ typings/
 
 # Mac specific
 .DS_Store
+
+# NLP training data
+/data/classifier.json
