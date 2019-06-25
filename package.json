@@ -9,7 +9,9 @@
   "private": false,
   "scripts": {
     "dev": "nodemon --watch src --exec ts-node --ext js,ts src/index.ts",
-    "build": "tsc -p ."
+    "build": "tsc -p .",
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "yarn lint --fix"
   },
   "dependencies": {
     "discord.js": "^11.5.1",
