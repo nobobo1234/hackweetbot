@@ -3,6 +3,7 @@ import * as Discord from "discord.js";
 import { fromEvent, Observer, NextObserver, ErrorObserver } from "rxjs";
 import { tap } from "rxjs/operators";
 import { readFileSync } from "fs";
+import { msgDateNLP } from "./nlp";
 
 main();
 
@@ -16,7 +17,7 @@ function main() {
   client.on("ready", () => console.log("Discord bot, ready!"));
 
   createMessageObservable(client)
-    .pipe(botMessageEcho())
+    .pipe(msgDateNLP(client))
     .subscribe(botLogger());
 }
 
