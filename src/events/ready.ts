@@ -1,8 +1,8 @@
 import { handler } from "../index";
 import { Client } from "discord.js";
 
-export const run = (bot: Client) => {
-    handler.loadCommands();
-
-    console.log("Bot is ready!");
+export const run = (_: Client) => {
+  handler.loadCommands();
+  // TODO: Replace with proper logger
+  console.log("Bot is ready!");
 };

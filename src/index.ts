@@ -4,21 +4,21 @@ import { readdirSync, readFileSync } from "fs";
 import * as path from "path";
 import Handler from "./handler";
 
-export const env = dotenv.parse(readFileSync('.env'), { debug: true });
+dotenv.config();
 export let handler;
 
 async function main() {
   const client = new Discord.Client();
   handler = new Handler(client);
 
-  const events = readdirSync(path.join(__dirname, 'events'));
-  for(const event of events) {
-    const name = event.split('.')[0];
-    const eventFunc = await import(path.join(__dirname, 'events', name));
+  const events = readdirSync(path.join(__dirname, "events"));
+  for (const event of events) {
+    const name = event.split(".")[0];
+    const eventFunc = await import(path.join(__dirname, "events", name));
     client.on(name, (...args) => eventFunc.run(client, ...args));
   }
 
-  client.login(env.TOKEN);
+  client.login(process.env.TOKEN);
 }
 
 main();

@@ -1,10 +1,9 @@
 import { Client, Message, Collection } from "discord.js";
 import * as path from "path";
 import { readdirSync } from "fs";
-import { env } from "./index";
-import Command from "./interfaces/command";
+import { Command } from "./types";
 
-class Handler {
+export default class Handler {
   bot: Client;
   cmds: Collection<string, Command>;
 
@@ -28,7 +27,7 @@ class Handler {
 
   async handleCommand(msg: Message) {
     const args = msg.content
-      .slice(env.PREFIX.length)
+      .slice(process.env.PREFIX.length)
       .trim()
       .split(" ");
     const base = args.shift().toLowerCase();
@@ -48,5 +47,3 @@ class Handler {
     }
   }
 }
-
-export default Handler;
