@@ -3,8 +3,7 @@ import { DiscordAPIError, Message, TextChannel, User } from "discord.js";
 
 export function msgInChannelFilter(name: string) {
   return filter<Message>(m => {
-    if (!(m.channel instanceof TextChannel)) return false;
-    return m.channel.name === name;
+    return m.channel instanceof TextChannel && m.channel.name === name;
   });
 }
 
