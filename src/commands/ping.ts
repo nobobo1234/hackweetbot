@@ -1,4 +1,7 @@
-export const run = async (bot, msg) => {
+import { Client, Message } from "discord.js";
+
+export const run = async (bot: Client, msg: Message) => {
     const m = await msg.channel.send("Ping!");
-    m.edit(`Pong! Time taken: ${Math.round(m.createdTimestamp - msg.createdTimestamp)}ms`);
+    (<Message>m)
+        .edit(`Pong! Time taken: ${Math.round((<Message>m).createdTimestamp - msg.createdTimestamp)}ms`);
 }

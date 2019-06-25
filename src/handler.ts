@@ -1,16 +1,16 @@
-import * as Discord from "discord.js";
+import { Client, Message, Collection } from 'discord.js';
 import * as path from "path";
 import { readdirSync } from "fs";
 import { env } from "./index";
 import Command from "./interfaces/command";
 
 class Handler {
-    bot: Discord.Client;
-    cmds: Discord.Collection<string, Command>;
+    bot: Client;
+    cmds: Collection<string, Command>;
     
-    constructor(bot) {
+    constructor(bot: Client) {
         this.bot = bot;
-        this.cmds = new Discord.Collection();
+        this.cmds = new Collection();
     }
 
     loadCommands() {
@@ -22,11 +22,11 @@ class Handler {
         }
     }
 
-    loadCommand(base, cmd) {
+    loadCommand(base: string, cmd: Command) {
         this.cmds.set(base, cmd);
     }
 
-    async handleCommand(msg) {
+    async handleCommand(msg: Message) {
         const args = msg.content
             .slice(env.PREFIX.length)
             .trim()
@@ -41,7 +41,7 @@ class Handler {
                 await command.run(this.bot, msg, args);
             } catch (e) {
                 const m = await msg.channel.send(`:x: ${e}`);
-                m.delete(5000);
+                (<Message> m).delete(5000);
             }
         } else {
             msg.channel.send(`:x: Sorry, the command ${base} isn't found.`);
