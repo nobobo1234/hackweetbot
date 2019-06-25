@@ -96,3 +96,5 @@ typings/
 
 # Mac specific
 .DS_Store
+# Dist folder
+dist/
