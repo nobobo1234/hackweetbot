@@ -5,6 +5,10 @@
   "main": "dist/index.js",
   "repository": "git@github.com:nobobo1234/trainbot.git",
   "author": "SolarLiner <solarliner@gmail.com>",
+  "contributors": [
+    "Gruselhaus",
+    "Nola1222"
+  ],
   "license": "MIT",
   "private": false,
   "scripts": {
