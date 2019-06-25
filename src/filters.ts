@@ -8,7 +8,7 @@ export function msgInChannelFilter(name: string) {
   });
 }
 
-export function msgUserMention(user: User | string | RegExp) {
+export function msgUserMentionFilter(user: User | string | RegExp) {
   return filter<Message>(m => {
     if (typeof user === "string") {
       return m.mentions.users.filter(u => u.username === user).array().length > 0;
