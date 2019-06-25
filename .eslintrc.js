@@ -18,6 +18,7 @@ module.exports = {
     "prettier/prettier": "error",
     "linebreak-style": ["error", "unix"],
     quotes: ["error", "double"],
-    semi: ["error", "always"]
+    semi: ["error", "always"],
+    "@typescript-eslint/indent": "off"
   }
 };
