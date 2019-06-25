@@ -41,7 +41,7 @@ class Handler {
                 await command.run(this.bot, msg, args);
             } catch (e) {
                 const m = await msg.channel.send(`:x: ${e}`);
-                (<Message> m).delete(5000);
+                (m as Message).delete(5000);
             }
         } else {
             msg.channel.send(`:x: Sorry, the command ${base} isn't found.`);
