@@ -3,5 +3,4 @@
 A bot made for discord hack week
 
 # Dotenv configuration
-
-TBD
+`TOKEN` and `PREFIX`
