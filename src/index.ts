@@ -1,23 +1,30 @@
 import * as Discord from "discord.js";
 import * as dotenv from "dotenv";
-import { readdirSync, readFileSync } from "fs";
-import * as path from "path";
 import Handler from "./handler";
+import { pingCommand } from "./commands";
 
 dotenv.config();
-export let handler;
 
-async function main() {
+let handler: Handler;
+
+function onReady(): void {
+  //TODO: Replace with proper logger
+  console.log("Discord bot ready!");
+}
+
+function onMessage(_: Discord.Client, msg: Discord.Message): void {
+  if (!msg.content.startsWith(process.env.DISCORD_BOT_PREFIX)) return;
+
+  handler.handleCommand(msg);
+}
+
+async function main(): Promise<void> {
   const client = new Discord.Client();
   handler = new Handler(client);
+  handler.loadCommand("ping", pingCommand);
 
-  const events = readdirSync(path.join(__dirname, "events"));
-  for (const event of events) {
-    const name = event.split(".")[0];
-    const eventFunc = await import(path.join(__dirname, "events", name));
-    client.on(name, (...args) => eventFunc.run(client, ...args));
-  }
-
+  client.on("ready", onReady);
+  client.on("message", onMessage);
   client.login(process.env.TOKEN);
 }
 

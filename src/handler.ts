@@ -1,43 +1,37 @@
 import { Client, Message, Collection } from "discord.js";
-import * as path from "path";
-import { readdirSync } from "fs";
-import { Command } from "./types";
+
+//eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type CommandFunction = (bot: Client, msg: Message, ...args: any[]) => void;
 
 export default class Handler {
-  bot: Client;
-  cmds: Collection<string, Command>;
+  public bot: Client;
+  public cmds: Collection<string, CommandFunction>;
 
-  constructor(bot: Client) {
+  public constructor(bot: Client) {
     this.bot = bot;
     this.cmds = new Collection();
   }
 
-  loadCommands() {
-    const commands = readdirSync(path.join(__dirname, "commands"));
-    for (const command of commands) {
-      const base = command.split(".")[0];
-      const cmd = require(path.join(__dirname, "commands", command));
-      this.loadCommand(base, cmd);
-    }
-  }
-
-  loadCommand(base: string, cmd: Command) {
+  public loadCommand(base: string, cmd: CommandFunction): void {
     this.cmds.set(base, cmd);
   }
 
-  async handleCommand(msg: Message) {
+  public async handleCommand(msg: Message): Promise<void> {
     const args = msg.content
       .slice(process.env.PREFIX.length)
       .trim()
       .split(" ");
     const base = args.shift().toLowerCase();
 
-    if (!base) return msg.channel.send(":x: You need to provide a command");
+    if (!base) {
+      msg.channel.send(":x: You need to provide a command");
+      return;
+    }
 
     const command = this.cmds.get(base);
     if (command) {
       try {
-        await command.run(this.bot, msg, args);
+        await command(this.bot, msg, args);
       } catch (e) {
         const m = await msg.channel.send(`:x: ${e}`);
         (m as Message).delete(5000);
