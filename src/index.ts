@@ -1,19 +1,19 @@
 import * as Discord from "discord.js";
 import * as dotenv from "dotenv";
+import { createServer, IncomingMessage, ServerResponse } from "http";
 import Handler from "./handler";
 import { pingCommand } from "./commands";
 
 // Simple Webserver that redirects to the repo to avoid application errors on the Heroku Plattform
-import * as express from "express";
-const app = express();
-app.get("/", (req: express.Request, res: express.Response) => {
-  res.redirect("https://github.com/nobobo1234/trainbot");
-});
-app.listen(process.env.PORT || 3000, () => console.log("Webserver started!"));
-
+createServer(redirectHandler).listen(process.env.PORT || 5000);
 dotenv.config();
 
 let handler: Handler;
+
+function redirectHandler(_: IncomingMessage, res: ServerResponse): void {
+  res.writeHead(302, { Location: process.env.GITHUB_PROJECT });
+  res.end();
+}
 
 function onReady(): void {
   //TODO: Replace with proper logger
