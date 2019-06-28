@@ -3,6 +3,14 @@ import * as dotenv from "dotenv";
 import Handler from "./handler";
 import { pingCommand } from "./commands";
 
+// Simple Webserver that redirects to the repo to avoid application errors on the Heroku Plattform
+import * as express from "express";
+const app = express();
+app.get("/", (req: express.Request, res: express.Response) => {
+  res.redirect("https://github.com/nobobo1234/trainbot");
+});
+app.listen(process.env.PORT || 3000, () => console.log("Webserver started!"));
+
 dotenv.config();
 
 let handler: Handler;
