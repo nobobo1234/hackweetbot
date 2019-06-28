@@ -15,7 +15,8 @@
     "dev": "nodemon --watch src --exec ts-node --ext js,ts src/index.ts",
     "build": "tsc -p .",
     "lint": "eslint src/**/*.ts",
-    "lint:fix": "yarn lint --fix"
+    "lint:fix": "yarn lint --fix",
+    "start": "node dist/index.js"
   },
   "dependencies": {
     "discord.js": "^11.5.1",
