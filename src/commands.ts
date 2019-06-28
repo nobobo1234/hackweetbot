@@ -1,5 +1,5 @@
 import { Client, Message } from "discord.js";
-import { todos } from "./index";
+import { todos, reminders } from "./index";
 
 export async function pingCommand(bot: Client, msg: Message): Promise<void> {
   let m = await msg.channel.send("Ping!");
@@ -39,4 +39,8 @@ export async function todoCommand(bot: Client, msg: Message, args: Array<string>
       msg.channel.send(`Successfully edited todo ${index+1} with the new content \`${args.slice(2).join(' ')}\``);
     }
   }
+}
+
+export async function remindCommand(bot: Client, msg: Message, args: Array<string>): Promise <void> {
+
 }

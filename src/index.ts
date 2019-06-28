@@ -8,8 +8,14 @@ import { pingCommand, todoCommand } from "./commands";
 createServer(redirectHandler).listen(process.env.PORT || 5000);
 dotenv.config();
 
+type reminder = {
+  date: Date,
+  text: string
+}
+
 let handler: Handler;
 export const todos: Discord.Collection<string, string[]> = new Discord.Collection();
+export const reminders: Discord.Collection<string, reminder[]> = new Discord.Collection();
 
 function redirectHandler(_: IncomingMessage, res: ServerResponse): void {
   res.writeHead(302, { Location: process.env.GITHUB_PROJECT });
