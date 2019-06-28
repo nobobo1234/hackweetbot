@@ -33,7 +33,7 @@ async function main(): Promise<void> {
 
   client.on("ready", onReady);
   client.on("message", onMessage);
-  client.login(process.env.TOKEN);
+  client.login(process.env.DISCORD_BOT_TOKEN);
 }
 
 main();
