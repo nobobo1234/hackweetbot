@@ -1,7 +1,7 @@
 import { Client, Message, Collection } from "discord.js";
 
 //eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type CommandFunction = (bot: Client, msg: Message, ...args: any[]) => void;
+export type CommandFunction = (bot: Client, msg: Message, args: any[]) => void;
 
 export default class Handler {
   public bot: Client;
@@ -18,7 +18,7 @@ export default class Handler {
 
   public async handleCommand(msg: Message): Promise<void> {
     const args = msg.content
-      .slice(process.env.PREFIX.length)
+      .slice(process.env.DISCORD_BOT_PREFIX.length)
       .trim()
       .split(" ");
     const base = args.shift().toLowerCase();
